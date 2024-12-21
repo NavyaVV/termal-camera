@@ -1,118 +1,170 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
+import AppStack from './src/route/AppStack';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const queryClient = new QueryClient();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <QueryClientProvider client={queryClient}> 
+        <AppStack />
+    </QueryClientProvider>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
+
+
+
+// // import React, { useState } from 'react';
+// // import { Dimensions, View, Button, SafeAreaView } from 'react-native';
+// // import { useFlir, FlirCameraView } from 'react-native-flir';
+// // const useStream = () => {
+// //   const [streaming, setStreaming] = useState(false);
+
+// //   return {
+// //     active: streaming,
+// //     start: () => setStreaming(true),
+// //     stop: () => setStreaming(false),
+// //   };
+// // };
+
+// // const useThermal = () => {
+// //   const [thermal, setThermal] = useState(false);
+
+// //   return {
+// //     active: thermal,
+// //     enable: () => setThermal(true),
+// //     disable: () => setThermal(false),
+// //   };
+// // };
+
+// // const { width, height } = Dimensions.get('window');
+
+// // const App = () => {
+// //   const {
+// //     scanning,
+// //     connected,
+// //     streaming,
+// //     device,
+// //     start,
+// //     stop,
+// //     connect,
+// //     disconnect,
+// //   } = useFlir();
+// //   const stream = useStream();
+// //   const thermal = useThermal();
+
+// //   return (
+// //     <SafeAreaView style={{ flex: 1 }}>
+// //       {!streaming && !connected && !scanning && (
+// //         <Button title="Scan For Devices" onPress={start} color={'green'} />
+// //       )}
+// //       {!streaming && !connected && scanning && (
+// //         <Button
+// //           title="Stop Scanning For Devices"
+// //           onPress={stop}
+// //           color={'red'}
+// //         />
+// //       )}
+// //       {!streaming && !connected && scanning && device && (
+// //         <Button title={`Connect ${device}`} onPress={connect} color={'green'} />
+// //       )}
+// //       {!streaming && connected && (
+// //         <Button
+// //           title={`Disconnect ${device}`}
+// //           onPress={disconnect}
+// //           color={'red'}
+// //         />
+// //       )}
+// //       {!streaming && connected && (
+// //         <Button
+// //           title="Start Streaming"
+// //           onPress={stream.start}
+// //           color={'green'}
+// //         />
+// //       )}
+// //       {streaming && connected && (
+// //         <Button title="Stop Streaming" onPress={stream.stop} color={'red'} />
+// //       )}
+// //       {streaming && connected && (
+// //         <Button
+// //           title={thermal.active ? 'Disable Thermal' : 'Enable Thermal'}
+// //           onPress={thermal.active ? thermal.disable : thermal.enable}
+// //           color={thermal.active ? 'red' : 'green'}
+// //         />
+// //       )}
+// //       <View style={{ opacity: streaming ? 1 : 0 }}>
+// //         <FlirCameraView
+// //           stream={stream.active}
+// //           thermal={thermal.active}
+// //           width={width}
+// //           height={height / 1.5}
+// //         />
+// //       </View>
+// //     </SafeAreaView>
+// //   );
+// // };
+
+// // export default App
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { Dimensions, View, Button, SafeAreaView, Text } from 'react-native';
+// import { FlirCameraView } from 'react-native-flir';
+
+// const { width, height } = Dimensions.get('window');
+
+// const App = () => {
+//   const [streaming, setStreaming] = useState(false);
+//   const [connected, setConnected] = useState(false);
+
+//   const handleConnect = () => {
+//     // Here, you should check if a thermal camera device is available
+//     // and set 'connected' to true based on that.
+//     setConnected(true);
+//   };
+
+//   const handleDisconnect = () => {
+//     setConnected(false);
+//   };
+
+//   const handleStartStreaming = () => {
+//     setStreaming(true);
+//   };
+
+//   const handleStopStreaming = () => {
+//     setStreaming(false);
+//   };
+
+//   return (
+//     <SafeAreaView style={{ flex: 1 }}>
+//       {!streaming && !connected && (
+//         <Button title="Connect Device" onPress={handleConnect} color={'green'} />
+//       )}
+//       {connected && !streaming && (
+//         <Button title="Start Streaming" onPress={handleStartStreaming} color={'green'} />
+//       )}
+//       {streaming && (
+//         <Button title="Stop Streaming" onPress={handleStopStreaming} color={'red'} />
+//       )}
+
+//       {streaming && connected ? (
+//         <FlirCameraView
+//           stream={streaming}
+//           width={width}
+//           height={height / 1.5}
+//           thermal={true}
+//         />
+//       ) : (
+//         <Text style={{ textAlign: 'center', marginTop: 20 }}>
+//           Please connect the thermal camera and start streaming.
+//         </Text>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// export default App;
